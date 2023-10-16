@@ -1,0 +1,24 @@
+/* General */
+*{
+    margin: 0;
+    padding: 0;
+}
+/* navbar */
+.navbar-nav > li {
+    margin-right: 15px;
+}
+
+
+/* main index */
+#logo_cilsa{
+    display: flex;
+    width: 80%;
+    align-content: center;
+
+}
+
+.titulo_index{
+    display: flex;
+    text-align: center;
+
+}
