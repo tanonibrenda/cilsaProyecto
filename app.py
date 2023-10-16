@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -10,9 +11,24 @@ def principal():
 def desafios():
     return render_template('desafios.html')
 
-@app.route("/proyecto")
+@app.route("/proyecto", methods=['GET', 'POST'])
 def proyecto():
+    if request.method == 'POST':
+        # Obtener datos del formulario
+        informacion = request.form.get('informacion')
+
+        # Guardar información en un archivo .txt
+        with open('informacion.txt', 'a') as file:
+            file.write(informacion + '\n')
+
     return render_template('proyecto.html')
+
+@app.route("/ver_informacion")
+def ver_informacion():
+    with open('informacion.txt', 'r') as file:
+        informacion = file.read()
+
+    return render_template('ver_informacion.html', informacion=informacion)
 
 @app.route("/mirutadevida")
 def mirutadevida():
