@@ -16,23 +16,30 @@
 
 <body>
   <header>
-    <!-- place navbar here -->
+    <!--  navbar  -->
     {% include 'partials/navbar.html' %}
   </header>
   <main>
     <div class="container my-5">
 <h1>Mi Primer Proyecto Python</h1>
 
-<!-- Formulario para agregar información -->
+<p>Esta es la presentación de mi proyecto final. La finalidad es que se pueda crear un archivo de "bloc de notas" 📄 con extensión .txt y un archivo con de Word. </p>
+
+
 <form method="post" action="{{ url_for('proyecto') }}">
   <label for="informacion">Información:</label>
-  <input type="text" name="informacion" required>
-  <button type="submit">Guardar Información</button>
+  <textarea name="informacion" required></textarea>
+
+  <button type="submit" name="tipo_archivo" value="bloc_notas">Crear Archivo de Bloc de Notas</button>
+  <button type="submit" name="tipo_archivo" value="word">Crear Archivo de Word</button>
 </form>
 
- <!-- Botón para ver la información -->
- <a href="{{ url_for('ver_informacion') }}" class="btn btn-primary">Ver Información</a>
-</div>
+{% if nombre_archivo %}
+  <a href="{{ url_for('ver_informacion', archivo=nombre_archivo) }}" class="btn btn-primary">Ver Información</a>
+{% endif %}
+
+
+
   </main>
   <footer>
     <!-- place footer here -->
