@@ -1,0 +1,5 @@
+{
+    "python.linting.pylance": {
+        "disable": ["function-not-called", "function-not-accessed"]
+    }
+}
