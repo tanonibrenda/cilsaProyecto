@@ -27,3 +27,12 @@
 footer{
     margin: 0;
 }
+
+/* formulario de proyecto */
+
+.id_botones_proyect{
+    display: flex;
+    justify-content: center; /* Para centrar los elementos horizontalmente */
+    margin-top: 25px;
+    margin-bottom: 30px;
+}

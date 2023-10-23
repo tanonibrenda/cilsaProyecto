@@ -1,13 +1,12 @@
 # app.py
 import os
-from flask import Flask, render_template, request, render_template
+from flask import Flask, render_template, request, render_template, send_file
 
-from flask import send_file
+
 
 from app.controllers.archivo_controller import (
       
-     obtener_archivos_creados, descargar_archivo,
-     
+     obtener_archivos_creados, descargar_archivo,   
    
      guardar_informacion_en_txt, guardar_informacion_en_word,
     
@@ -69,6 +68,10 @@ def descargar(archivo):
 @app.route("/desafios")
 def desafios():
     return render_template('desafios.html')
+
+@app.route('/desafios_1a5')
+def desafios_1a5():
+    return render_template('desafios_1a5.html')
 
 @app.route("/mirutadevida")
 def mirutadevida():

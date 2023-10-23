@@ -27,18 +27,83 @@
 
 
 <form method="post" action="{{ url_for('proyecto') }}">
-  <label for="informacion">Información:</label>
-  <textarea name="informacion" required></textarea>
-
-  <button type="submit" name="tipo_archivo" value="bloc_notas">Crear Archivo de Bloc de Notas</button>
-  <button type="submit" name="tipo_archivo" value="word">Crear Archivo de Word</button>
+  <div class"container mb-20px">
+  <label for="informacion">Creación de Documento:</label>
+  <textarea class="form-control w-80 mb-20px" name="informacion" placeholder="Ingresa la información" required></textarea>
+  </div>
+  <div class="container mt-10 center">
+    
+    <div class="mb-4 mt-10" id="boton_proyecto">
+      
+      <div class="btn-group" id="id_botones_proyecto">
+        <button type="submit" name="tipo_archivo" value="bloc_notas" class="btn btn-primary">Crear Archivo de Bloc de Notas</button>
+        <button type="submit" name="tipo_archivo" value="word" class="btn btn-primary">Crear Archivo de Word</button>
+      </div>
+    </div>
+  </div>
 </form>
+
+<div class="d-grid gap-2 col-6 mx-auto">
 
 {% if nombre_archivo %}
   <a href="{{ url_for('ver_informacion', archivo=nombre_archivo) }}" class="btn btn-primary">Descargar</a>
 {% endif %}
 
+</div>
+<div class="d-grid gap-2 col-6 mx-auto">
+<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+  Ver Codigo
+</button>
+</p>
+<div class="collapse" id="collapseExample">
+<div class="card card-body">
+  <p>Este es el archivo archivo_controller.py:
+    <br>
+  <code>
+    
+import os
+from docx import Document
+from flask import send_file
 
+def guardar_informacion_en_txt(info):
+    nombre_archivo = "archivos/informacion_guardada.txt"
+    with open(nombre_archivo, "a") as archivo:
+        archivo.write(info + '\n')
+    return nombre_archivo
+
+def guardar_informacion_en_word(info):
+    nombre_archivo = "archivos/informacion_guardada.docx"
+    document = Document()
+    document.add_paragraph(info)
+    document.save(nombre_archivo)
+    return nombre_archivo
+
+def guardar_informacion_en_txt(info):
+    nombre_archivo = "informacion_guardada.txt"
+    with open(nombre_archivo, "a") as archivo:
+        archivo.write(info + '\n')
+    return nombre_archivo
+
+def guardar_informacion_en_word(info):
+    nombre_archivo = "informacion_guardada.docx"
+    document = Document()
+    document.add_paragraph(info)
+    document.save(nombre_archivo)
+    return nombre_archivo
+
+def obtener_archivos_creados():
+    archivos = [f for f in os.listdir() if f.endswith("_info.txt") or f.endswith("_info.docx")]
+    return archivos
+
+
+def descargar_archivo(archivo):
+    ruta_archivo = os.path.join("archivos", archivo)
+    return send_file(ruta_archivo, as_attachment=True, mimetype="application/octet-stream")
+
+  </code>
+</div>
+</div>
+</div>
 
   </main>
   <footer>
