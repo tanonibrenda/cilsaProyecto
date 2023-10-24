@@ -1,85 +1,76 @@
 # app.py
 import os
-from flask import Flask, render_template, request, render_template, send_file
-
-
-
-from app.controllers.archivo_controller import (
-      
-     obtener_archivos_creados, descargar_archivo,   
-   
-     guardar_informacion_en_txt, guardar_informacion_en_word,
-    
-)
-
+import csv
+from flask import Flask, render_template, request, send_file
 
 app = Flask(__name__)
+
+# Función para cargar los datos desde el archivo CSV
+def cargar_datos(archivo):
+    with open(archivo, newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+        return list(reader)
+
+# Función para calcular la cantidad de votos totales por partido
+def calcular_votos_totales(datos):
+    votos_totales = {}
+
+    for persona in datos:
+        partido = persona.get('Partido', 'Sin Partido')
+        votos_totales[partido] = votos_totales.get(partido, 0) + 1
+
+    return votos_totales
+
+# Función para filtrar personas por DNI y nombre
+def filtrar_personas(datos, dni_limite, nombre):
+    return [persona for persona in datos if int(persona['DNI']) > dni_limite and persona['Nombre'] == nombre]
+
+# Función para guardar en un archivo de texto personas con apellido "Gonzalez"
+def guardar_gonzalez(datos):
+    with open('gonzalez.txt', 'w', encoding='utf-8') as file:
+        for persona in datos:
+            if persona['Apellido'] == 'Gonzalez':
+                file.write(f"{persona['Nombre']} {persona['Apellido']}\n")
 
 @app.route("/")
 def principal():
     return render_template('index.html')
 
-@app.route("/proyecto", methods=['GET', 'POST'])
+@app.route("/proyecto")
 def proyecto():
-    nombre_archivo = None  
-    if request.method == 'POST':
-        informacion = request.form.get('informacion')
-        tipo_archivo = request.form.get('tipo_archivo')
+    # Tarea 1: Calcular y mostrar la cantidad de votos totales por partido
+    # Cargar los datos desde el archivo CSV (votos.csv)
+    archivo_csv = 'votos.csv'
+    datos_votos = cargar_datos(archivo_csv)
 
-        if tipo_archivo == 'bloc_notas':
-            nombre_archivo = guardar_informacion_en_txt(informacion)
-        elif tipo_archivo == 'word':
-            nombre_archivo = guardar_informacion_en_word(informacion)
+    # Calcular la cantidad de votos totales por partido
+    votos_totales = calcular_votos_totales(datos_votos)
 
-    return render_template('proyecto.html', nombre_archivo=nombre_archivo)
-
-
-@app.route("/ver_informacion/<archivo>")
-def ver_informacion(archivo):
-    # Ruta fija para los archivos (ajusta según tu estructura de directorios)
-    carpeta_archivos = os.path.join(app.root_path, 'archivos')
+    # Puedes imprimir en la consola para verificar
+    print("Votos totales por partido:", votos_totales)
     
-    # Obtén la ruta completa del archivo
-    ruta_archivo = os.path.join(carpeta_archivos, archivo)
+    # Tarea 2: Mostrar personas con DNI mayor a 40,000,000 y nombre "Juan"
+    personas_juan = filtrar_personas(datos_votos, 40000000, 'Juan')
 
-    if os.path.exists(ruta_archivo):
-        with open(ruta_archivo, 'rb') as file:
-            informacion = file.read()
+    # Tarea 3: Guardar en un archivo de texto las personas con apellido "Gonzalez"
+    personas_gonzalez = [persona for persona in datos_votos if persona['Apellido'] == 'Gonzalez']
+    guardar_gonzalez(personas_gonzalez)
 
-        # Imprime la ruta del archivo en la consola de Flask
-        app.logger.info("Ruta del archivo: %s", ruta_archivo)
-
-        return send_file(ruta_archivo, as_attachment=True)
-    else:
-        app.logger.error("¡El archivo no existe! Ruta: %s", ruta_archivo)
-        return "Archivo no encontrado"
-    
-@app.route("/archivos_creados")
-def archivos_creados():
-    archivos = obtener_archivos_creados()
-    # Puedes renderizar una plantilla de Flask o devolver la lista de archivos en algún formato
-    return render_template('archivos_creados.html', archivos=archivos)
-
-@app.route("/descargar_archivo/<archivo>")
-def descargar(archivo):
-    return descargar_archivo(archivo)
+    return render_template('proyecto.html', votos_totales=votos_totales, personas_juan=personas_juan, personas_gonzalez=personas_gonzalez)
 
 
-@app.route("/desafios")
-def desafios():
-    return render_template('desafios.html')
-
-@app.route('/desafios_1a5')
-def desafios_1a5():
-    return render_template('desafios_1a5.html')
-
-@app.route("/mirutadevida")
-def mirutadevida():
-    return render_template('mirutadevida.html')
+# Rutas a páginas accesorias
+@app.route("/integrantes")
+def integrantes():
+    return render_template('integrantes.html')
 
 @app.route("/contacto")
 def contacto():
     return render_template('contacto.html')
 
 if __name__ == "__main__":
+    # Cargar los datos desde el archivo CSV al iniciar la aplicación
+    archivo_csv = 'votos.csv'
+    datos_votos = cargar_datos(archivo_csv)
+    
     app.run(debug=True, host='0.0.0.0', port=5050)

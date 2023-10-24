@@ -1,0 +1,12 @@
+Descripción del Trabajo
+El trabajo final tiene como objetivo principal realizar un análisis de datos y
+aplicar operaciones de filtrado en el archivo votos.csv. A través de la
+programación en Python, deben hacer las siguientes tareas:
+1. Calcular y mostrar la cantidad de votos totales por partido
+2. Mostrar las personas con DNI mayor a 40,000,000 y con nombre
+"Juan"
+3. Guardar en un archivo de texto las personas que se apellidan
+"Gonzalez".
+
+
+
