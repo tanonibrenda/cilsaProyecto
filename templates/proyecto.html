@@ -13,6 +13,17 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
+    <style>
+      #codigoContainer {
+        display: none;
+        background-color: black;
+        color: limegreen;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+      }
+    </style>
+
 </head>
 
 <body>
@@ -24,79 +35,207 @@
     <div class="container my-5">
       <h1>Mi Primer Proyecto Python</h1>
 
-      <p>Esta es la presentación del proyecto final. El objetivo principal es realizar un análisis de datos y aplicar operaciones de filtrado en el archivo votos.csv.</p>
+      <h4>Esta es la presentación del proyecto final. El objetivo principal es realizar un análisis de datos y aplicar operaciones de filtrado en el archivo votos.csv.</h4>
 
       <div class="container">
-        <p>Calcular y mostrar la cantidad de votos totales por partido</p>
-        <a href="#" class="btn btn-primary" onclick="mostrarVotosTotales()">Mostrar Votos Totales</a>
-    
+        <div>
+          <h3>Calcular y mostrar la cantidad de votos totales por partido</h3>
+          <div  class="mt-4 mb-4 text-center">
+          <button class="btn btn-primary" onclick="mostrarVotosTotales()">Mostrar Votos Totales</button>
+          </div>
+
         <!-- Resultados de votos totales (inicialmente ocultos) -->
-        <div id="resultadosVotos" style="display: none;">
-            <h3>Cantidad Total de Votos</h3>
-            <p>Total de Votos: {{ total_votos }}</p>
-    
-            <h3>Votos por Partido</h3>
-            {% for partido, votos in votos_totales.items() %}
-                <p>Votos del {{ partido }}: {{ votos }}</p>
-                <ul>
-                    {% for persona in personas_gonzalez %}
-                        {% if persona['Voto'] == partido %}
-                            <li>{{ persona['Nombre'] }} {{ persona['Apellido'] }} - DNI: {{ persona['DNI'] }}</li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            {% endfor %}
+          <div id="resultadosVotos" style="display: none;">
+          <h3>Cantidad Total de Votos</h3>
+          <p>Total de Votos: {{ votos_totales }}</p>
+          </div>
         </div>
-    </div>
-    
-    <script>
-        function mostrarVotosTotales() {
-            // Mostrar los resultados al hacer clic
-            document.getElementById('resultadosVotos').style.display = 'block';
-        }
-    </script>
-       
+        <div  class="mt-4 mb-4 text-center">
+          <button class="btn btn-primary" onclick="mostrarVotantesPorPartido()">Mostrar Votantes por Partido</button></div>
+
+         
+          <!-- Resultados de votantes por partido  -->
+          <div id="resultadosVotantesPorPartido" style="display: none;">
+            <h3>Votantes por Partido</h3>
+          
+            {% for partido, votantes in votos_por_partido.items() %}
+              <h4>{{ partido }}</h4>
+              {% if votantes %}
+                <p>Número de Votantes: {{ votantes|length }}</p>
+                <ul>
+                  {% for persona in votantes %}
+                    <li>{{ persona['Nombre'] }} {{ persona['Apellido'] }} - DNI: {{ persona['DNI'] }}</li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p>No hay votantes</p>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+
+
 
       <div class="container">
-        <p>Mostrar las personas con DNI mayor a 40,000,000 y con nombre "Juan"</p>
-        <a href="#" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#filtrarPersonas" aria-expanded="false"
-          aria-controls="filtrarPersonas">Votantes Juan y DNI mayor a 40.000.000</a>
+        <h3>Mostrar las personas con DNI mayor a 40,000,000 y con nombre "Juan"</h3>
+        <div  class="mt-4 mb-4 text-center">
+        <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#filtrarPersonas" aria-expanded="false"
+          aria-controls="filtrarPersonas">Votantes Juan y DNI mayor a 40.000.000</button></div>
         <div class="collapse" id="filtrarPersonas">
           <ul>
             {% for persona in personas_juan %}
-              <li>{{ persona['Nombre'] }} {{ persona['Apellido'] }}</li>
+            <li>{{ persona['Nombre'] }} {{ persona['Apellido'] }}</li>
             {% endfor %}
           </ul>
         </div>
       </div>
       <div class="container">
-        <p>Guardar en un archivo de texto las personas que se apellidan "Gonzalez".</p>
-        <a href="#" class="btn btn-primary" onclick="guardarGonzalez()">Guardar y Descargar Archivo de Gonzalez</a>
-    </div>
-    
-    <script>
-        function guardarGonzalez() {
-            // Aquí puedes realizar alguna acción adicional si es necesario
-            alert('Guardando archivo de Gonzalez');
-        }
-    </script>
-
-    </div>
-    <div class="d-grid gap-2 col-6 mx-auto">
-      <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-        aria-expanded="false" aria-controls="collapseExample">
-        Ver Codigo
-      </button>
-      <div class="collapse" id="collapseExample">
-        <div class="card card-body">
-          <p>Este es el archivo votos.py:</p>
-          <pre>
-            <!-- Aquí coloca el código de votos.py -->
-          </pre>
-        </div>
+        <h3>Guardar en un archivo de texto las personas que se apellidan "Gonzalez".</h3>
+        <div  class="mt-4 mb-4 text-center">
+        <button class="btn btn-primary" onclick="guardarGonzalez()">Guardar y Descargar Archivo de Gonzalez</button></div>
       </div>
-    </div>
+      <div class="mt-4 mb-4 text-center">
+        <button onclick="mostrarCodigo()" class="btn btn-primary">Mostrar Código</button>
+      </div>
 
+    <div id="codigoContainer">
+      <pre>
+    <code>
+      # app.py
+      import os
+      import csv
+      from flask import Flask, render_template, request, send_file
+      
+      app = Flask(__name__)
+      
+      # Función para cargar los datos desde el archivo CSV
+      def cargar_datos(archivo):
+          with open(archivo, newline='', encoding='utf-8') as csvfile:
+              reader = csv.DictReader(csvfile)
+              return list(reader)
+          
+      
+      
+      
+      # Función para calcular la cantidad de votos totales por partido
+      def calcular_votos_totales(datos):
+          votos_totales = {}
+      
+          for persona in datos:
+              partido = persona.get('Partido', 'Sin Partido')
+              votos_totales[partido] = votos_totales.get(partido, 0) + 1
+      
+          return votos_totales
+      
+      #Funcion para calcular votos por partido
+      def calcular_votos_por_partido(datos):
+          votos_por_partido = {'partido1': [], 'partido2': [], 'partido3': []}
+      
+          for persona in datos:
+              partido = persona.get('Partido')
+              if partido in votos_por_partido:
+                  votos_por_partido[partido].append(persona)
+      
+          return votos_por_partido
+      
+      # Función para filtrar personas por DNI y nombre
+      def filtrar_personas(datos, dni_limite, nombre):
+          return [persona for persona in datos if int(persona['DNI']) > dni_limite and persona['Nombre'] == nombre]
+      
+      # Función para guardar en un archivo de texto personas con apellido "Gonzalez"
+      def guardar_gonzalez(datos):
+          with open('gonzalez.txt', 'w', encoding='utf-8') as file:
+              for persona in datos:
+                  if persona['Apellido'] == 'Gonzalez':
+                      file.write(f"{persona['Nombre']} {persona['Apellido']}\n")
+      
+      @app.route("/")
+      def principal():
+          return render_template('index.html')
+      
+      @app.route("/proyecto")
+      def proyecto():
+          # Tarea 1: Calcular y mostrar la cantidad de votos totales por partido
+          # Cargar los datos desde el archivo CSV (votos.csv)
+          archivo_csv = 'votos.csv'
+          datos_votos = cargar_datos(archivo_csv)
+      
+          # Calcular la cantidad de votos totales por partido
+          votos_totales = calcular_votos_totales(datos_votos)
+      
+          # Imprimir en la consola para verificar
+          print("Votos totales por partido:", votos_totales)
+          
+          #Calcular votos por partido
+          votos_por_partido = calcular_votos_por_partido(datos_votos)
+          print("Votos por Partido: ", votos_por_partido)
+          
+          
+          
+          # Tarea 2: Mostrar personas con DNI mayor a 40,000,000 y nombre "Juan"
+          personas_juan = filtrar_personas(datos_votos, 40000000, 'Juan')
+      
+          # Tarea 3: Guardar en un archivo de texto las personas con apellido "Gonzalez"
+          personas_gonzalez = [persona for persona in datos_votos if persona['Apellido'] == 'Gonzalez']
+          guardar_gonzalez(personas_gonzalez)
+      
+         
+      
+          return render_template('proyecto.html', 
+                                 total_votos=len(datos_votos),
+                                 votos_totales=votos_totales,
+                                 votos_por_partido=votos_por_partido, 
+                                 personas_juan=personas_juan, 
+                                 personas_gonzalez=personas_gonzalez,
+                                 )
+      
+      # Rutas a páginas accesorias
+      @app.route("/integrantes")
+      def integrantes():
+          return render_template('integrantes.html')
+      
+      @app.route("/contacto")
+      def contacto():
+          return render_template('contacto.html')
+      
+      if __name__ == "__main__":
+          # Cargar los datos desde el archivo CSV al iniciar la aplicación
+          archivo_csv = 'votos.csv'
+          datos_votos = cargar_datos(archivo_csv)
+          
+          app.run(debug=True, host='0.0.0.0', port=5050)
+      </pre>
+  </code>
+</div>
+
+<script>
+  function mostrarVotosTotales() {
+    // Mostrar los resultados al hacer clic
+    document.getElementById('resultadosVotos').style.display = 'block';
+    // Ocultar resultados de votos por partido (si estaban visibles)
+    document.getElementById('resultadosVotantesPorPartido').style.display = 'none';
+  }
+
+  function mostrarVotantesPorPartido() {
+    // Mostrar los resultados al hacer clic
+    document.getElementById('resultadosVotantesPorPartido').style.display = 'block';
+    // Ocultar resultados de votos totales (si estaban visibles)
+    document.getElementById('resultadosVotos').style.display = 'none';
+  }
+
+  function guardarGonzalez() {
+    // Aquí puedes realizar alguna acción adicional si es necesario
+    alert('Guardando archivo de Gonzalez');
+  }
+
+  function mostrarCodigo() {
+    var codigoContainer = document.getElementById('codigoContainer');
+    codigoContainer.style.display = 'block';
+  }
+</script>
+      
+
+    </div>
   </main>
   <footer>
     <!-- Footer -->

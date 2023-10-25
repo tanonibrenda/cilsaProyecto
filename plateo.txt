@@ -10,3 +10,28 @@ programación en Python, deben hacer las siguientes tareas:
 
 
 
+  <div id="resultadosVotantesPorPartido" style="display: none;">
+            <h3>Votantes por Partido</h3>
+    
+            <h4>Partido 1</h4>
+            <ul>
+                {% for persona in votos_por_partido['partido1'] %}
+                    <li>{{ persona['Nombre'] }} {{ persona['Apellido'] }} - DNI: {{ persona['DNI'] }}</li>
+                {% endfor %}
+            </ul>
+    
+            <h4>Partido 2</h4>
+            <ul>
+                {% for persona in votos_por_partido['partido2'] %}
+                    <li>{{ persona['Nombre'] }} {{ persona['Apellido'] }} - DNI: {{ persona['DNI'] }}</li>
+                {% endfor %}
+            </ul>
+    
+            <h4>Partido 3</h4>
+            <ul>
+                {% for persona in votos_por_partido['partido3'] %}
+                    <li>{{ persona['Nombre'] }} {{ persona['Apellido'] }} - DNI: {{ persona['DNI'] }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+

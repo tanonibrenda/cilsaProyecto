@@ -10,6 +10,9 @@ def cargar_datos(archivo):
     with open(archivo, newline='', encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile)
         return list(reader)
+    
+
+
 
 # Función para calcular la cantidad de votos totales por partido
 def calcular_votos_totales(datos):
@@ -20,6 +23,17 @@ def calcular_votos_totales(datos):
         votos_totales[partido] = votos_totales.get(partido, 0) + 1
 
     return votos_totales
+
+#Funcion para calcular votos por partido
+def calcular_votos_por_partido(datos):
+    votos_por_partido = {'partido1': [], 'partido2': [], 'partido3': []}
+
+    for persona in datos:
+        partido = persona.get('Partido')
+        if partido in votos_por_partido:
+            votos_por_partido[partido].append(persona)
+
+    return votos_por_partido
 
 # Función para filtrar personas por DNI y nombre
 def filtrar_personas(datos, dni_limite, nombre):
@@ -46,8 +60,14 @@ def proyecto():
     # Calcular la cantidad de votos totales por partido
     votos_totales = calcular_votos_totales(datos_votos)
 
-    # Puedes imprimir en la consola para verificar
+    # Imprimir en la consola para verificar
     print("Votos totales por partido:", votos_totales)
+    
+    #Calcular votos por partido
+    votos_por_partido = calcular_votos_por_partido(datos_votos)
+    print("Votos por Partido: ", votos_por_partido)
+    
+    
     
     # Tarea 2: Mostrar personas con DNI mayor a 40,000,000 y nombre "Juan"
     personas_juan = filtrar_personas(datos_votos, 40000000, 'Juan')
@@ -56,8 +76,15 @@ def proyecto():
     personas_gonzalez = [persona for persona in datos_votos if persona['Apellido'] == 'Gonzalez']
     guardar_gonzalez(personas_gonzalez)
 
-    return render_template('proyecto.html', votos_totales=votos_totales, personas_juan=personas_juan, personas_gonzalez=personas_gonzalez)
+   
 
+    return render_template('proyecto.html', 
+                           total_votos=len(datos_votos),
+                           votos_totales=votos_totales,
+                           votos_por_partido=votos_por_partido, 
+                           personas_juan=personas_juan, 
+                           personas_gonzalez=personas_gonzalez,
+                           )
 
 # Rutas a páginas accesorias
 @app.route("/integrantes")
