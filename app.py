@@ -7,10 +7,16 @@ app = Flask(__name__)
 
 # Función para cargar los datos desde el archivo CSV
 def cargar_datos(archivo):
-    with open(archivo, newline='', encoding='utf-8') as csvfile:
-        reader = csv.DictReader(csvfile)
-        return list(reader)
-    
+    try:
+        with open(archivo, newline='', encoding='utf-8') as csvfile:
+            reader = csv.DictReader(csvfile)
+            return list(reader)
+    except FileNotFoundError:
+        print(f"Error: El archivo {archivo} no se encuentra.")
+        return []
+    except Exception as e:
+        print(f"Error al cargar los datos: {e}")
+        return []
 
 
 
@@ -54,7 +60,7 @@ def principal():
 def proyecto():
     # Tarea 1: Calcular y mostrar la cantidad de votos totales por partido
     # Cargar los datos desde el archivo CSV (votos.csv)
-    archivo_csv = 'votos.csv'
+    archivo_csv = os.path.join(os.path.dirname(__file__), 'votos.csv')
     datos_votos = cargar_datos(archivo_csv)
 
     # Calcular la cantidad de votos totales por partido
