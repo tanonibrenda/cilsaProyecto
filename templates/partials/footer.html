@@ -6,6 +6,8 @@
     <footer
             class="text-center text-lg-start text-white"
             style="background-color: #929fba"
+            
+          
             >
       <!-- Grid container -->
       <div class="container p-4 pb-0">
@@ -30,14 +32,14 @@
             <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
               <h6 class="text-uppercase mb-4 font-weight-bold">Mi Página</h6>
               <p>
-                <a class="text-white">Página Principal</a>
+                <a class="text-white" href="/">Página Principal</a>
               </p>
               <p>
-                <a class="text-white">Proyecto</a>
+                <a class="text-white" href="{{ url_for('proyecto') }}">Proyecto</a>
               </p>
                
               <p>
-                <a class="text-white">Miembros del Grupo</a>
+                <a class="text-white" href="{{ url_for('integrantes') }}">Miembros del Grupo</a>
               </p>
             </div>
             <!-- Grid column -->
@@ -49,36 +51,23 @@
   
             <!-- Grid column -->
             <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-              <h6 class="text-uppercase mb-4 font-weight-bold">Contacto</h6>
-              <p><i class="fas fa-home mr-3"></i> Buenos Aires, Argentina</p>
-              <p><i class="fas fa-envelope mr-3"></i> brendayohenatanoni@gmail.com</p>
-              <p><i class="fas fa-phone mr-3"></i> + 5491157256883</p>
+              <h6 class="text-uppercase mb-4 font-weight-bold"><a href="{{ url_for('contacto') }}">Contacto</a></h6>
+              <p><i class="fas fa-home mr-3"  href="{{ url_for('contacto') }}"></i>liriaolivera20@gmail.com</p>
+              <p><i class="fas fa-envelope mr-3"  href="{{ url_for('contacto') }}"></i> brendayohenatanoni@gmail.com</p>
+              <p><i class="fas fa-phone mr-3"  href="{{ url_for('contacto') }}"></i>kerosene.group@gmail.com</p>
               
             </div>
             <!-- Grid column -->
   
             <!-- Grid column -->
             <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-              <h6 class="text-uppercase mb-4 font-weight-bold">Redes Sociales</h6>
+              <h6 class="text-uppercase mb-4 font-weight-bold">Repositorio</h6>
+              <a href="https://github.com/tanonibrenda/cilsaProyecto.git">GitHub</a>
   
              
   
-              <!-- Linkedin -->
-              <a
-                 class="btn btn-primary btn-floating m-1"
-                 style="background-color: #0082ca"
-                 href="#!"
-                 role="button"
-                 ><i class="fab fa-linkedin-in"></i
-                ></a>
-              <!-- Github -->
-              <a
-                 class="btn btn-primary btn-floating m-1"
-                 style="background-color: #333333"
-                 href="#!"
-                 role="button"
-                 ><i class="fab fa-github"></i
-                ></a>
+            
+              
             </div>
           </div>
           <!--Grid row-->
@@ -98,5 +87,11 @@
       <!-- Copyright -->
     </footer>
     <!-- Footer -->
+    <style>
+      footer a {
+          text-decoration: none;
+          color: white;
+      }
+  </style>
   </div>
   <!-- End of .container -->

@@ -1,9 +1,9 @@
 # app.py
-import os
+
 import csv
 import pandas as pd
 
-from flask import Flask, render_template, request, send_file, jsonify
+from flask import Flask, render_template
 from flask_caching import Cache
 
 app = Flask(__name__)
