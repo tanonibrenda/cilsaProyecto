@@ -1,7 +1,0 @@
-# Detener la ejecución con Ctrl+C
-# Volver a ejecutar tu script Python
-python app.py
-
-flask run
-
-export FLASK_ENV=development
