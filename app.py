@@ -89,6 +89,7 @@ def filtrar_personas(datos, dni_limite, nombre):
      # Utiliza una lista  para filtrar las personas que cumplen con las condiciones datos, dni y nombre
     return [persona for persona in datos if int(persona['DNI']) > dni_limite and persona['Nombre'] == nombre]
 
+
 # Función para guardar en un archivo de texto personas con apellido "Gonzalez". Punto 3
 def guardar_gonzalez(datos):
     # Abre el archivo 'gonzalez.txt' en modo de escritura ('w') con codificación utf-8
